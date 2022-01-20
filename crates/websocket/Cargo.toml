@@ -36,3 +36,7 @@ actix-web = { version = "4.0.0-beta.18", default-features = false, features = ["
 actix-web-actors = { version = "4.0.0-beta.8", default-features = false }
 opentelemetry = "0.16"
 tracing-opentelemetry = "0.16"
+rosetta-i18n = "0.1"
+
+[build-dependencies]
+rosetta-build = "0.1"

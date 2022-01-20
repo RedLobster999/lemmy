@@ -11,6 +11,7 @@ use serde::Serialize;
 
 pub mod chat_server;
 pub mod handlers;
+pub mod l18n;
 pub mod messages;
 pub mod routes;
 pub mod send;
