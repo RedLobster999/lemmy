@@ -1,4 +1,4 @@
-use crate::protocol::Source;
+use crate::protocol::SourceCompat;
 use html2md::parse_html;
 
 pub mod comment;
@@ -8,12 +8,20 @@ pub mod person;
 pub mod post;
 pub mod private_message;
 
-pub(crate) fn get_summary_from_string_or_source(
+pub(crate) fn read_from_string_or_source(raw: &str, source: &SourceCompat) -> String {
+  if let SourceCompat::Lemmy(s) = source {
+    s.content.clone()
+  } else {
+    parse_html(raw)
+  }
+}
+
+pub(crate) fn read_from_string_or_source_opt(
   raw: &Option<String>,
-  source: &Option<Source>,
+  source: &SourceCompat,
 ) -> Option<String> {
-  if let Some(source) = &source {
-    Some(source.content.clone())
+  if let SourceCompat::Lemmy(s) = source {
+    Some(s.content.clone())
   } else {
     raw.as_ref().map(|s| parse_html(s))
   }
