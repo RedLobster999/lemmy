@@ -4,8 +4,8 @@ use crate::{
     community_moderators::ApubCommunityModerators,
     community_outbox::ApubCommunityOutbox,
   },
-  objects::{community::ApubCommunity},
-  protocol::{objects::Endpoints, ImageObject},
+  objects::{community::ApubCommunity, read_from_string_or_source_opt},
+  protocol::{objects::Endpoints, ImageObject, SourceCompat},
 };
 use activitystreams_kinds::actor::GroupType;
 use chrono::{DateTime, FixedOffset};
@@ -19,8 +19,6 @@ use lemmy_websocket::LemmyContext;
 use serde::{Deserialize, Serialize};
 use serde_with::skip_serializing_none;
 use url::Url;
-use crate::objects::read_from_string_or_source_opt;
-use crate::protocol::SourceCompat;
 
 #[skip_serializing_none]
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -38,8 +36,7 @@ pub struct Group {
   /// title
   pub(crate) name: Option<String>,
   pub(crate) summary: Option<String>,
-  #[serde(default)]
-  pub(crate) source: SourceCompat,
+  pub(crate) source: Option<SourceCompat>,
   pub(crate) icon: Option<ImageObject>,
   /// banner
   pub(crate) image: Option<ImageObject>,
